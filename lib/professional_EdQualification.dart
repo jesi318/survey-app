@@ -526,10 +526,12 @@ class _ProfEdState extends State<ProfEd> {
             ElevatedButton(
                 onPressed: () {
                   Get.to(QualMarks(
-                      FirstQual: FirstQualtype,
-                      SecondQual: SecondQualtype,
-                      ThirdQual: ThirdQualType,
-                      FourthQual: FourthQualType));
+                    FirstQual: FirstQualtype,
+                    SecondQual: SecondQualtype,
+                    ThirdQual: ThirdQualType,
+                    FourthQual: FourthQualType,
+                    FifthQual: FifthQualType,
+                  ));
                 },
                 child: Text('Continue'))
           ],
