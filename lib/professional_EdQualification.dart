@@ -17,6 +17,7 @@ class _ProfEdState extends State<ProfEd> {
   String? SecondQualtype;
   String? ThirdQualType;
   String? FourthQualType;
+  String? FifthQualType;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -249,8 +250,8 @@ class _ProfEdState extends State<ProfEd> {
                           Column(
                             children: [
                               RadioListTile(
-                                title: Text("Msc"),
-                                value: "Msc",
+                                title: Text("MSc"),
+                                value: "MSc",
                                 groupValue: ThirdQualType,
                                 onChanged: (value) {
                                   setState(() {
@@ -283,8 +284,8 @@ class _ProfEdState extends State<ProfEd> {
                               Column(
                                 children: [
                                   RadioListTile(
-                                    title: Text("Msc"),
-                                    value: "Msc",
+                                    title: Text("MSc"),
+                                    value: "MSc",
                                     groupValue: ThirdQualType,
                                     onChanged: (value) {
                                       setState(() {
@@ -306,32 +307,66 @@ class _ProfEdState extends State<ProfEd> {
                               ),
                             ],
                           )
-                        : Column(
-                            children: [
-                              HeadingText(
-                                text: "Enter Third nursing Qualiffication",
-                                fontWeight: FontWeight.w700,
-                                size: 18,
-                              ),
-                              Column(
+                        : FirstQualtype == "ANM" && SecondQualtype == "GNM"
+                            ? Column(
                                 children: [
-                                  RadioListTile(
-                                    title: Text("NA"),
-                                    value: "NA",
-                                    groupValue: ThirdQualType,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        ThirdQualType = value.toString();
-                                      });
-                                    },
+                                  HeadingText(
+                                    text: "Enter Third nursing Qualiffication",
+                                    fontWeight: FontWeight.w700,
+                                    size: 18,
+                                  ),
+                                  Column(
+                                    children: [
+                                      RadioListTile(
+                                        title: Text("PCBSC"),
+                                        value: "PCBSC",
+                                        groupValue: ThirdQualType,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            ThirdQualType = value.toString();
+                                          });
+                                        },
+                                      ),
+                                      RadioListTile(
+                                        title: Text("NA"),
+                                        value: "NA",
+                                        groupValue: ThirdQualType,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            ThirdQualType = value.toString();
+                                          });
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            : Column(
+                                children: [
+                                  HeadingText(
+                                    text: "Enter Third nursing Qualiffication",
+                                    fontWeight: FontWeight.w700,
+                                    size: 18,
+                                  ),
+                                  Column(
+                                    children: [
+                                      RadioListTile(
+                                        title: Text("NA"),
+                                        value: "NA",
+                                        groupValue: ThirdQualType,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            ThirdQualType = value.toString();
+                                          });
+                                        },
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
 
             //Fourth Qualification
-            ThirdQualType == "MSc"
+            (SecondQualtype == "PCBSC" && ThirdQualType == "MSc")
                 ? Column(
                     children: [
                       HeadingText(
@@ -365,10 +400,108 @@ class _ProfEdState extends State<ProfEd> {
                       ),
                     ],
                   )
+                : FirstQualtype == "ANM" &&
+                        SecondQualtype == "GNM" &&
+                        ThirdQualType == "PCBSC"
+                    ? Column(
+                        children: [
+                          HeadingText(
+                            text: "Enter Fourth nursing Qualiffication",
+                            fontWeight: FontWeight.w700,
+                            size: 18,
+                          ),
+                          Column(
+                            children: [
+                              RadioListTile(
+                                title: Text("MSc"),
+                                value: "MSc",
+                                groupValue: FourthQualType,
+                                onChanged: (value) {
+                                  setState(() {
+                                    FourthQualType = value.toString();
+                                  });
+                                },
+                              ),
+                              RadioListTile(
+                                title: Text("NA"),
+                                value: "NA",
+                                groupValue: FourthQualType,
+                                onChanged: (value) {
+                                  setState(() {
+                                    FourthQualType = value.toString();
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          HeadingText(
+                            text: "Enter Fourth nursing Qualiffication",
+                            fontWeight: FontWeight.w700,
+                            size: 18,
+                          ),
+                          Column(
+                            children: [
+                              RadioListTile(
+                                title: Text("NA"),
+                                value: "NA",
+                                groupValue: FourthQualType,
+                                onChanged: (value) {
+                                  setState(() {
+                                    FourthQualType = value.toString();
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+
+            //Fifth Qualification
+            FirstQualtype == "ANM" &&
+                    SecondQualtype == "GNM" &&
+                    ThirdQualType == "PCBSC" &&
+                    FourthQualType == "MSc"
+                ? Column(
+                    children: [
+                      HeadingText(
+                        text: "Enter Fifth nursing Qualiffication",
+                        fontWeight: FontWeight.w700,
+                        size: 18,
+                      ),
+                      Column(
+                        children: [
+                          RadioListTile(
+                            title: Text("PHD"),
+                            value: "PHD",
+                            groupValue: FifthQualType,
+                            onChanged: (value) {
+                              setState(() {
+                                FifthQualType = value.toString();
+                              });
+                            },
+                          ),
+                          RadioListTile(
+                            title: Text("NA"),
+                            value: "NA",
+                            groupValue: FifthQualType,
+                            onChanged: (value) {
+                              setState(() {
+                                FifthQualType = value.toString();
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
                 : Column(
                     children: [
                       HeadingText(
-                        text: "Enter Fourth nursing Qualiffication",
+                        text: "Enter Fifth nursing Qualiffication",
                         fontWeight: FontWeight.w700,
                         size: 18,
                       ),
@@ -377,10 +510,10 @@ class _ProfEdState extends State<ProfEd> {
                           RadioListTile(
                             title: Text("NA"),
                             value: "NA",
-                            groupValue: FourthQualType,
+                            groupValue: FifthQualType,
                             onChanged: (value) {
                               setState(() {
-                                FourthQualType = value.toString();
+                                FifthQualType = value.toString();
                               });
                             },
                           ),
