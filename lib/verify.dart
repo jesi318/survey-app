@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:phone_otp_ui/phone.dart';
 import 'package:pinput/pinput.dart';
 
 class MyVerify extends StatefulWidget {
@@ -9,6 +12,8 @@ class MyVerify extends StatefulWidget {
 }
 
 class _MyVerifyState extends State<MyVerify> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  var code = "";
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
@@ -84,6 +89,9 @@ class _MyVerifyState extends State<MyVerify> {
               ),
               Pinput(
                 length: 6,
+                onChanged: (value) {
+                  code = value;
+                },
                 // defaultPinTheme: defaultPinTheme,
                 // focusedPinTheme: focusedPinTheme,
                 // submittedPinTheme: submittedPinTheme,
@@ -102,7 +110,24 @@ class _MyVerifyState extends State<MyVerify> {
                         primary: Colors.green.shade600,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
-                    onPressed: () {},
+                    onPressed: () async {
+                      try {
+                        PhoneAuthCredential credential =
+                            PhoneAuthProvider.credential(
+                                verificationId: MyPhone.verify1, smsCode: code);
+
+                        // Sign the user in (or link) with the credential
+                        await auth.signInWithCredential(credential);
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, "home", (route) => false);
+                      } catch (e) {
+                        Get.snackbar(
+                          "error",
+                          "errormessage",
+                          backgroundColor: Colors.green,
+                        );
+                      }
+                    },
                     child: Text("Verify Phone Number")),
               ),
               Row(
