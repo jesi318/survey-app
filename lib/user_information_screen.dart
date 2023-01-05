@@ -8,6 +8,7 @@ import 'package:phone_otp_ui/ID_proof.dart';
 import 'package:phone_otp_ui/widgets/dob.dart';
 import 'package:phone_otp_ui/models/user_model.dart';
 import 'package:phone_otp_ui/widgets/textField.dart';
+import 'package:phone_otp_ui/widgets/text_heading.dart';
 
 class UserInfromationScreen extends StatefulWidget {
   const UserInfromationScreen({super.key});
@@ -72,6 +73,14 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SizedBox(
+                  height: 15,
+                ),
+                HeadingText(
+                    text: "Basic Details",
+                    fontWeight: FontWeight.bold,
+                    size: 30),
+                SizedBox(height: 15),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   padding:

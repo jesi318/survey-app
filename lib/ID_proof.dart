@@ -145,7 +145,7 @@ class _IDProofState extends State<IDProof> {
                   selectFile();
                   // }
                 },
-                child: Text("Select file 1"),
+                child: Text("Select front part of ID proof"),
               ),
               if (pickedFile != null)
                 Container(
@@ -163,7 +163,7 @@ class _IDProofState extends State<IDProof> {
                   selectFile2();
                   // }
                 },
-                child: Text("Select image 2"),
+                child: Text("Select back part of ID Proof"),
               ),
               if (pickedFile2 != null)
                 Container(
