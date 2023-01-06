@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -16,6 +20,62 @@ class _otherProfState extends State<otherProf> {
   List<TextEditingController> controllers = <TextEditingController>[];
   List<TextEditingController> controllers1 = <TextEditingController>[];
   List<TextEditingController> controllers2 = <TextEditingController>[];
+  List<PlatformFile?> pickedFile = <PlatformFile>[];
+
+  // Future selectFile() async {
+  //   final result = await FilePicker.platform.pickFiles();
+
+  //   if (result == null) return;
+
+  //   setState(() {
+  //     pickedFile = result.files.first;
+  //   });
+  // }
+
+  // Future selectFile2() async {
+  //   final result = await FilePicker.platform.pickFiles();
+
+  //   if (result == null) return;
+
+  //   setState(() {
+  //     pickedFile2 = result.files.first;
+  //   });
+  // }
+
+  // Future selectFile3() async {
+  //   final result = await FilePicker.platform.pickFiles();
+
+  //   if (result == null) return;
+
+  //   setState(() {
+  //     pickedFile3 = result.files.first;
+  //   });
+  // }
+
+  // Future selectFile4() async {
+  //   final result = await FilePicker.platform.pickFiles();
+
+  //   if (result == null) return;
+
+  //   setState(() {
+  //     pickedFile4 = result.files.first;
+  //   });
+  // }
+
+  // Future selectFile5() async {
+  //   final result = await FilePicker.platform.pickFiles();
+
+  //   if (result == null) return;
+
+  //   setState(() {
+  //     pickedFile5 = result.files.first;
+  //   });
+  // }
+  // The element type 'Future<dynamic> Function()' can't be assigned to the list type 'Future<dynamic>'.
+
+  // final List<Future<dynamic> Function()> functions = [
+  //   selectFile,
+  // ];
 
   bool otherdegrees = false;
   String otherdegrees_num = '1';
@@ -27,6 +87,19 @@ class _otherProfState extends State<otherProf> {
     controllers = List.generate(5, (i) => TextEditingController());
     controllers1 = List.generate(5, (i) => TextEditingController());
     controllers2 = List.generate(5, (i) => TextEditingController());
+    PlatformFile? pickedFile1;
+    PlatformFile? pickedFile2;
+    PlatformFile? pickedFile3;
+    PlatformFile? pickedFile4;
+    PlatformFile? pickedFile5;
+
+    pickedFile = [
+      pickedFile1,
+      pickedFile2,
+      pickedFile3,
+      pickedFile4,
+      pickedFile5,
+    ];
   }
 
   @override
@@ -113,6 +186,29 @@ class _otherProfState extends State<otherProf> {
                               maxLines: 1,
                               controller: controllers2[i],
                             ),
+                            ElevatedButton(
+                                onPressed: () async {
+                                  {
+                                    final result =
+                                        await FilePicker.platform.pickFiles();
+
+                                    if (result == null) return;
+
+                                    setState(() {
+                                      pickedFile[i] = result.files.first;
+                                    });
+                                  }
+                                },
+                                child: Text("upload marks card")),
+                            // for (var i = 0;
+                            //     i < int.parse(otherdegrees_num);
+                            //     i++)
+                            if (pickedFile[i] != null)
+                              Container(
+                                child: Image.file(File(pickedFile[i]!.path!),
+                                    width: double.infinity,
+                                    fit: BoxFit.scaleDown),
+                              ),
                           ],
                         ),
                     ],
@@ -122,6 +218,7 @@ class _otherProfState extends State<otherProf> {
                 onPressed: () {
                   for (var i = 0; i < int.parse(otherdegrees_num); i++)
                     print(controllers[i].text);
+                  print(pickedFile);
                 },
                 child: Text("continue"))
           ],
