@@ -1,6 +1,9 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -19,6 +22,8 @@ class Education extends StatefulWidget {
 class _EducationState extends State<Education> {
   PlatformFile? pickedFile;
   PlatformFile? pickedFile2;
+  final c10thMarkscontroller = new TextEditingController();
+  final c12thMarkscontroller = new TextEditingController();
 
   Future selectFile() async {
     final result = await FilePicker.platform.pickFiles();
@@ -40,23 +45,34 @@ class _EducationState extends State<Education> {
     });
   }
 
-  // Future uploadFile1() async {
-  //   final path =
-  //       'files/${FirebaseAuth.instance.currentUser!.uid}/$IDtype/front';
-  //   final file = File(pickedFile!.path!);
+  Future uploadFile1() async {
+    final path =
+        'files/${FirebaseAuth.instance.currentUser!.uid}/10th Marks Card';
+    final file = File(pickedFile!.path!);
 
-  //   final ref = FirebaseStorage.instance.ref().child(path);
-  //   ref.putFile(file);
-  // }
+    final ref = FirebaseStorage.instance.ref().child(path);
+    ref.putFile(file);
+  }
 
-  // Future uploadFile2() async {
-  //   final path = 'files/${FirebaseAuth.instance.currentUser!.uid}/$IDtype/back';
-  //   final file = File(pickedFile2!.path!);
+  Future uploadFile2() async {
+    final path =
+        'files/${FirebaseAuth.instance.currentUser!.uid}/12th Marks Card';
+    final file = File(pickedFile2!.path!);
 
-  //   final ref = FirebaseStorage.instance.ref().child(path);
-  //   ref.putFile(file);
-  // }
-  final c10thMarkscontroller = new TextEditingController();
+    final ref = FirebaseStorage.instance.ref().child(path);
+    ref.putFile(file);
+  }
+
+  Future addUserEducationDetails() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({
+      'Marks scored in 10th': c10thMarkscontroller.text,
+      'Marks scored in 12th': c12thMarkscontroller.text,
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,7 +143,7 @@ class _EducationState extends State<Education> {
               icon: Icons.numbers,
               inputType: TextInputType.numberWithOptions(decimal: true),
               maxLines: 1,
-              controller: c10thMarkscontroller),
+              controller: c12thMarkscontroller),
           ElevatedButton(
             onPressed: () {
               // if (formKey.currentState!.validate()) {
@@ -151,6 +167,9 @@ class _EducationState extends State<Education> {
           ),
           ElevatedButton(
             onPressed: () {
+              addUserEducationDetails();
+              uploadFile1();
+              uploadFile2();
               // if (formKey.currentState!.validate()) {
               //   // Get.snackbar("Title", "message",
               //   //     titleText: Text("title"),
