@@ -23,6 +23,14 @@ class _IDProofState extends State<IDProof> {
   String? IDtype;
   PlatformFile? pickedFile;
   PlatformFile? pickedFile2;
+  final AadharController = TextEditingController();
+  var myage;
+  Future addUserageandIDNUmber() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({'age': myage, '$IDtype Number': AadharController.text});
+  }
 
   Future selectFile() async {
     final result = await FilePicker.platform.pickFiles();
@@ -63,7 +71,6 @@ class _IDProofState extends State<IDProof> {
 
   @override
   Widget build(BuildContext context) {
-    final AadharController = TextEditingController();
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Scaffold(
@@ -84,7 +91,13 @@ class _IDProofState extends State<IDProof> {
               SizedBox(
                 height: 15,
               ),
-              DobID(),
+              DobID(
+                onChanged: (value) {
+                  setState(() {
+                    myage = value;
+                  });
+                },
+              ),
               Container(
                   width: MediaQuery.of(context).size.width,
                   padding:
@@ -119,6 +132,7 @@ class _IDProofState extends State<IDProof> {
                           ),
                           IDtype != null
                               ? TextFormField(
+                                  controller: AadharController,
                                   decoration: InputDecoration(
                                     labelText: "Enter $IDtype",
                                   ),
@@ -174,76 +188,21 @@ class _IDProofState extends State<IDProof> {
                 height: 20,
               ),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   // if (formKey.currentState!.validate()) {
                   //   // Get.snackbar("Title", "message",
                   //   //     titleText: Text("title"),
                   //   //     messageText: Text("Textt"),
                   //   //     snackPosition: SnackPosition.BOTTOM);
-                  uploadFile1();
-                  uploadFile2();
-                  Get.snackbar("Title", "message",
-                      titleText: Text("title"),
-                      messageText: Text("Textt"),
-                      snackPosition: SnackPosition.BOTTOM);
+                  await addUserageandIDNUmber();
+                  await uploadFile1();
+                  await uploadFile2();
                   Get.to(PersDetails());
-                  // }
                 },
-                child: Text("Upload Image"),
+                child: Text("Continue"),
               ),
             ]),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget textFeld({
-    required String hintText,
-    required IconData icon,
-    required TextInputType inputType,
-    required int maxLines,
-    required TextEditingController controller,
-    required var validator,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: TextFormField(
-        validator: validator,
-        cursorColor: Colors.green,
-        controller: controller,
-        keyboardType: inputType,
-        maxLines: maxLines,
-        decoration: InputDecoration(
-          prefixIcon: Container(
-            margin: const EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Colors.green,
-            ),
-            child: Icon(
-              icon,
-              size: 20,
-              color: Colors.white,
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(
-              color: Colors.transparent,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(
-              color: Colors.transparent,
-            ),
-          ),
-          hintText: hintText,
-          alignLabelWithHint: true,
-          border: InputBorder.none,
-          fillColor: Colors.green.shade50,
-          filled: true,
         ),
       ),
     );

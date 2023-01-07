@@ -12,7 +12,8 @@ import 'package:phone_otp_ui/ID_proof.dart';
 
 class DobID extends StatefulWidget {
   final String? person;
-  const DobID({super.key, this.person});
+  final ValueChanged<String> onChanged;
+  const DobID({super.key, this.person, required this.onChanged});
 
   @override
   State<DobID> createState() => _DobIDState();
@@ -50,7 +51,9 @@ class _DobIDState extends State<DobID> {
                   this.birthDate = df.format(birthDate);
                   this.age = calculateAge(birthDate);
 
-                  setState(() {});
+                  setState(() {
+                    widget.onChanged(age.toString());
+                  });
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -139,13 +142,4 @@ class _DobIDState extends State<DobID> {
     });
     return completer.future;
   }
-
-  // Future addUserage() async {
-  //   await FirebaseFirestore.instance
-  //       .collection('users')
-  //       .doc(FirebaseAuth.instance.currentUser!.uid)
-  //       .update({'age': age});
-
-  //   Get.to(IDProof());
-  // }
 }

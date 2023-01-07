@@ -14,7 +14,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(GetMaterialApp(
-    initialRoute: 'otherprofed',
+    initialRoute: 'persdetails',
     debugShowCheckedModeBanner: false,
     routes: {
       'phone': (context) => MyPhone(),

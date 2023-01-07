@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
+import 'package:phone_otp_ui/Nursing_reg.dart';
 import 'package:phone_otp_ui/widgets/textField.dart';
 import 'package:phone_otp_ui/widgets/text_heading.dart';
 import 'package:phone_otp_ui/widgets/yesno_button.dart';
@@ -21,61 +23,6 @@ class _otherProfState extends State<otherProf> {
   List<TextEditingController> controllers1 = <TextEditingController>[];
   List<TextEditingController> controllers2 = <TextEditingController>[];
   List<PlatformFile?> pickedFile = <PlatformFile>[];
-
-  // Future selectFile() async {
-  //   final result = await FilePicker.platform.pickFiles();
-
-  //   if (result == null) return;
-
-  //   setState(() {
-  //     pickedFile = result.files.first;
-  //   });
-  // }
-
-  // Future selectFile2() async {
-  //   final result = await FilePicker.platform.pickFiles();
-
-  //   if (result == null) return;
-
-  //   setState(() {
-  //     pickedFile2 = result.files.first;
-  //   });
-  // }
-
-  // Future selectFile3() async {
-  //   final result = await FilePicker.platform.pickFiles();
-
-  //   if (result == null) return;
-
-  //   setState(() {
-  //     pickedFile3 = result.files.first;
-  //   });
-  // }
-
-  // Future selectFile4() async {
-  //   final result = await FilePicker.platform.pickFiles();
-
-  //   if (result == null) return;
-
-  //   setState(() {
-  //     pickedFile4 = result.files.first;
-  //   });
-  // }
-
-  // Future selectFile5() async {
-  //   final result = await FilePicker.platform.pickFiles();
-
-  //   if (result == null) return;
-
-  //   setState(() {
-  //     pickedFile5 = result.files.first;
-  //   });
-  // }
-  // The element type 'Future<dynamic> Function()' can't be assigned to the list type 'Future<dynamic>'.
-
-  // final List<Future<dynamic> Function()> functions = [
-  //   selectFile,
-  // ];
 
   bool otherdegrees = false;
   String otherdegrees_num = '1';
@@ -186,6 +133,13 @@ class _otherProfState extends State<otherProf> {
                               maxLines: 1,
                               controller: controllers2[i],
                             ),
+                            if (pickedFile[i] != null)
+                              Container(
+                                child: Image.file(File(pickedFile[i]!.path!),
+                                    width: 150,
+                                    height: 200,
+                                    fit: BoxFit.scaleDown),
+                              ),
                             ElevatedButton(
                                 onPressed: () async {
                                   {
@@ -203,12 +157,6 @@ class _otherProfState extends State<otherProf> {
                             // for (var i = 0;
                             //     i < int.parse(otherdegrees_num);
                             //     i++)
-                            if (pickedFile[i] != null)
-                              Container(
-                                child: Image.file(File(pickedFile[i]!.path!),
-                                    width: double.infinity,
-                                    fit: BoxFit.scaleDown),
-                              ),
                           ],
                         ),
                     ],
@@ -219,6 +167,7 @@ class _otherProfState extends State<otherProf> {
                   for (var i = 0; i < int.parse(otherdegrees_num); i++)
                     print(controllers[i].text);
                   print(pickedFile);
+                  Get.to(NursingReg());
                 },
                 child: Text("continue"))
           ],
