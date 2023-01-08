@@ -1,4 +1,9 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -37,6 +42,19 @@ class _QualMarksState extends State<QualMarks> {
   PlatformFile? pickedFile3;
   PlatformFile? pickedFile4;
   PlatformFile? pickedFile5;
+
+  Future addUserProfMarksDetails() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({
+      widget.FirstQual! + 'Year of Passing': FistQualyearcontroller.text,
+      widget.SecondQual! + 'Year of Passing': SecondQualyearcontroller.text,
+      widget.ThirdQual! + 'Year of Passing': ThirdQualyearcontroller.text,
+      widget.FourthQual! + 'Year of Passing': FourthQualyearcontroller.text,
+      widget.FifthQual! + 'Year of Passing': FifthQualyearcontroller.text,
+    });
+  }
 
   Future selectFile() async {
     final result = await FilePicker.platform.pickFiles();
@@ -88,6 +106,56 @@ class _QualMarksState extends State<QualMarks> {
     });
   }
 
+  Future uploadFile1() async {
+    final Qualpath = widget.FirstQual;
+    final path =
+        'files/${FirebaseAuth.instance.currentUser!.uid}/Professional-Education/$Qualpath-certificate';
+    final file = File(pickedFile!.path!);
+
+    final ref = FirebaseStorage.instance.ref().child(path);
+    ref.putFile(file);
+  }
+
+  Future uploadFile2() async {
+    final Qualpath = widget.SecondQual;
+    final path =
+        'files/${FirebaseAuth.instance.currentUser!.uid}/Professional-Education/$Qualpath-certificate';
+    final file = File(pickedFile2!.path!);
+
+    final ref = FirebaseStorage.instance.ref().child(path);
+    ref.putFile(file);
+  }
+
+  Future uploadFile3() async {
+    final Qualpath = widget.ThirdQual;
+    final path =
+        'files/${FirebaseAuth.instance.currentUser!.uid}/Professional-Education/$Qualpath-certificate';
+    final file = File(pickedFile3!.path!);
+
+    final ref = FirebaseStorage.instance.ref().child(path);
+    ref.putFile(file);
+  }
+
+  Future uploadFile4() async {
+    final Qualpath = widget.FourthQual;
+    final path =
+        'files/${FirebaseAuth.instance.currentUser!.uid}/Professional-Education/$Qualpath-certificate';
+    final file = File(pickedFile4!.path!);
+
+    final ref = FirebaseStorage.instance.ref().child(path);
+    ref.putFile(file);
+  }
+
+  Future uploadFile5() async {
+    final Qualpath = widget.FifthQual;
+    final path =
+        'files/${FirebaseAuth.instance.currentUser!.uid}/Professional-Education/$Qualpath-certificate';
+    final file = File(pickedFile5!.path!);
+
+    final ref = FirebaseStorage.instance.ref().child(path);
+    ref.putFile(file);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,6 +201,12 @@ class _QualMarksState extends State<QualMarks> {
                           inputType: TextInputType.number,
                           maxLines: 1,
                           controller: FistQualyearcontroller),
+                      if (pickedFile != null)
+                        Container(
+                          height: MediaQuery.of(context).size.height * 1 / 4,
+                          child: Image.file(File(pickedFile!.path!),
+                              width: double.infinity, fit: BoxFit.scaleDown),
+                        ),
                       ElevatedButton(
                           onPressed: selectFile,
                           child: Text("Upload marks card"))
@@ -158,6 +232,12 @@ class _QualMarksState extends State<QualMarks> {
                           inputType: TextInputType.number,
                           maxLines: 1,
                           controller: SecondQualyearcontroller),
+                      if (pickedFile2 != null)
+                        Container(
+                          height: MediaQuery.of(context).size.height * 1 / 4,
+                          child: Image.file(File(pickedFile2!.path!),
+                              width: double.infinity, fit: BoxFit.scaleDown),
+                        ),
                       ElevatedButton(
                           onPressed: selectFile2,
                           child: Text("Upload marks card"))
@@ -183,6 +263,12 @@ class _QualMarksState extends State<QualMarks> {
                           inputType: TextInputType.number,
                           maxLines: 1,
                           controller: ThirdQualyearcontroller),
+                      if (pickedFile3 != null)
+                        Container(
+                          height: MediaQuery.of(context).size.height * 1 / 4,
+                          child: Image.file(File(pickedFile3!.path!),
+                              width: double.infinity, fit: BoxFit.scaleDown),
+                        ),
                       ElevatedButton(
                           onPressed: selectFile3,
                           child: Text("Upload marks card"))
@@ -208,6 +294,12 @@ class _QualMarksState extends State<QualMarks> {
                           inputType: TextInputType.number,
                           maxLines: 1,
                           controller: FourthQualyearcontroller),
+                      if (pickedFile4 != null)
+                        Container(
+                          height: MediaQuery.of(context).size.height * 1 / 4,
+                          child: Image.file(File(pickedFile4!.path!),
+                              width: double.infinity, fit: BoxFit.scaleDown),
+                        ),
                       ElevatedButton(
                           onPressed: selectFile4,
                           child: Text("Upload marks card"))
@@ -234,6 +326,12 @@ class _QualMarksState extends State<QualMarks> {
                           inputType: TextInputType.number,
                           maxLines: 1,
                           controller: FifthQualyearcontroller),
+                      if (pickedFile5 != null)
+                        Container(
+                          height: MediaQuery.of(context).size.height * 1 / 4,
+                          child: Image.file(File(pickedFile5!.path!),
+                              width: double.infinity, fit: BoxFit.scaleDown),
+                        ),
                       ElevatedButton(
                           onPressed: selectFile3,
                           child: Text("Upload marks card"))
@@ -246,6 +344,12 @@ class _QualMarksState extends State<QualMarks> {
             ),
             ElevatedButton(
                 onPressed: () {
+                  addUserProfMarksDetails();
+                  uploadFile1();
+                  uploadFile2();
+                  uploadFile3();
+                  uploadFile4();
+                  uploadFile5();
                   Get.to(otherProf());
                 },
                 child: Text("Continue"))

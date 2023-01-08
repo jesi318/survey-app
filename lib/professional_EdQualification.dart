@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -18,6 +20,19 @@ class _ProfEdState extends State<ProfEd> {
   String? ThirdQualType;
   String? FourthQualType;
   String? FifthQualType;
+  Future addUserProfEdDetails() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({
+      'First Qualification': FirstQualtype,
+      'Second Qualification': SecondQualtype,
+      'Third Qualification': ThirdQualType,
+      'Fourth Qualification': FourthQualType,
+      'Fifth Qualification': FifthQualType,
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -525,6 +540,7 @@ class _ProfEdState extends State<ProfEd> {
             //Continue Button
             ElevatedButton(
                 onPressed: () {
+                  addUserProfEdDetails();
                   Get.to(QualMarks(
                     FirstQual: FirstQualtype,
                     SecondQual: SecondQualtype,
